@@ -12,9 +12,7 @@ const Index: FunctionComponent = () => {
 
   return (
     <Box margin="large">
-      <Heading>
-        {data.viewer ? `You are signed in as ${data.viewer.name}` : 'Please sign in'}
-      </Heading>
+      <Heading>{data.viewer ? `You are signed in as ${data.viewer.name}` : "Please sign in"}</Heading>
     </Box>
   );
 };
