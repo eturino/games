@@ -1,5 +1,5 @@
 import { $enum } from "ts-enum-util";
-import { CardValue, numericCardValue, sortCardValue } from "../card-types";
+import { buildDeck, CardValue, numericCardValue, sortCardValue } from "../card-types";
 
 describe("numericCardValue", () => {
   $enum(CardValue)
@@ -17,5 +17,12 @@ describe("sortCardValue(a, b)", () => {
     const a = [CardValue.N4, CardValue.Q, CardValue.K, CardValue.J, CardValue.N3, CardValue.N10, CardValue.N1];
     const e = [CardValue.N1, CardValue.N3, CardValue.N4, CardValue.N10, CardValue.J, CardValue.Q, CardValue.K];
     expect([...a].sort(sortCardValue)).toEqual(e);
+  });
+});
+
+describe("buildDeck()", () => {
+  it("returns all 52 different cards", () => {
+    const a = buildDeck();
+    expect(a.length).toEqual(52);
   });
 });

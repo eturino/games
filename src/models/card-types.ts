@@ -1,5 +1,10 @@
 import { $enum } from "ts-enum-util";
 
+export type CardInfo = {
+  cardValue: CardValue;
+  cardSuit: CardSuit;
+};
+
 export enum CardValue {
   N1 = "1",
   N2 = "2",
@@ -49,4 +54,22 @@ export function cardSuitColor(x: CardSuit): "red" | "black" {
   } else {
     return "black";
   }
+}
+
+export function makeCardInfo(cardSuit: CardSuit, cardValue: CardValue): CardInfo {
+  return { cardSuit, cardValue };
+}
+
+export function numericCardInfo(x: CardInfo): number {
+  return numericCardSuit(x.cardSuit) + numericCardValue(x.cardValue);
+}
+
+export function sortCardInfo(a: CardInfo, b: CardInfo): number {
+  return numericCardInfo(a) - numericCardInfo(b);
+}
+
+export function buildDeck(): CardInfo[] {
+  return $CardSuit.getValues().flatMap((suit) => {
+    return $CardValue.getValues().map((value) => makeCardInfo(suit, value));
+  });
 }
