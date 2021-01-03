@@ -1,5 +1,8 @@
-import React, { FunctionComponent } from "react";
-import { CardSuit, CardValue } from "../../models/card-types";
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { FunctionComponent } from "react";
+import { jsx } from "theme-ui";
+import { CardSuit, cardSuitColor, CardValue } from "../../models/card-types";
 import { UICard } from "./UICard";
 
 export interface CardProps {
@@ -11,7 +14,7 @@ export interface CardProps {
 export const Card: FunctionComponent<CardProps> = ({ faceUp, cardValue, cardSuit }) => {
   return (
     <UICard faceUp={faceUp}>
-      <h1>
+      <h1 sx={{ color: cardSuitColor(cardSuit) }}>
         {cardValue} {cardSuit}
       </h1>
     </UICard>

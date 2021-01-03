@@ -1,14 +1,16 @@
-import { addDecorator, addParameters } from "@storybook/react";
-import { withThemeProvider } from "storybook-addon-theme-ui";
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx } from "theme-ui";
+import { ThemeProvider } from "theme-ui";
 import theme from "../src/theme";
 
-addParameters({
-  themeUi: {
-    themes: [{ theme, name: "Main Theme" }],
-  },
-});
-
-addDecorator(withThemeProvider);
+export const decorators = [
+  (Story) => (
+    <ThemeProvider theme={theme}>
+      <Story />
+    </ThemeProvider>
+  ),
+];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

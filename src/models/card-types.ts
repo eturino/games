@@ -42,3 +42,11 @@ export function numericCardSuit(x: CardSuit): number {
 export function sortCardSuit(a: CardSuit, b: CardSuit): number {
   return numericCardSuit(a) - numericCardSuit(b);
 }
+
+export function cardSuitColor(x: CardSuit): "red" | "black" {
+  if (x === CardSuit.Diamonds || x === CardSuit.Hearts) {
+    return "red";
+  } else {
+    return "black";
+  }
+}
