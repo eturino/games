@@ -16,6 +16,7 @@ const Template: Story<CardProps> = (args) => <Card {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
+  faceUp: true,
   cardValue: CardValue.J,
   cardSuit: CardSuit.Clubs,
 };
