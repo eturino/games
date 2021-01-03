@@ -1,0 +1,6 @@
+fragment Hand on Hand {
+  id
+  playerID
+  roundID
+  cards
+}

@@ -1,0 +1,7 @@
+# import Partial from './fragments/partial.graphql'
+
+query Viewer {
+  viewer {
+    ...Partial
+  }
+}
