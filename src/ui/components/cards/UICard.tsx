@@ -2,25 +2,31 @@
 /** @jsx jsx */
 import { FunctionComponent } from "react";
 import { AspectRatio, Card, jsx } from "theme-ui";
+import { RenderFnVoid } from "../../types";
 
 export interface UICardProps {
   faceUp: boolean;
+  renderUp: RenderFnVoid;
+  renderDown: RenderFnVoid;
+  onClick: () => void;
 }
 
-export const UICard: FunctionComponent<UICardProps> = ({ faceUp, children }) => {
+export const UICard: FunctionComponent<UICardProps> = ({ faceUp, renderUp, renderDown, onClick }) => {
   return (
     <Card
       variant="primary"
       sx={{
+        border: 0,
+        padding: 0,
         maxWidth: 256,
         minWidth: 100,
         mx: "auto",
         my: "auto",
-        backgroundColor: faceUp ? "white" : "gray",
       }}
+      onClick={onClick}
     >
       <AspectRatio
-        ratio={62 / 88}
+        ratio={40 / 56}
         sx={{
           p: 4,
           display: "flex",
@@ -28,7 +34,7 @@ export const UICard: FunctionComponent<UICardProps> = ({ faceUp, children }) => 
           justifyContent: "center",
         }}
       >
-        {faceUp ? children : null}
+        {faceUp ? renderUp() : renderDown()}
       </AspectRatio>
     </Card>
   );

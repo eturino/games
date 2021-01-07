@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import React from "react";
-import { CardSuit, CardValue } from "../../models/card-types";
+import { CardSuit, CardValue } from "../../../models/card-types";
 import { Card, CardProps } from "./Card";
 
 export default {

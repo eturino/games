@@ -32,13 +32,20 @@ export function sortCardValue(a: CardValue, b: CardValue): number {
 }
 
 export enum CardSuit {
-  Spades = "♠",
-  Clubs = "♣",
-  Hearts = "♥",
-  Diamonds = "♦",
+  Spades = "spades",
+  Clubs = "clubs",
+  Hearts = "hearts",
+  Diamonds = "diamonds",
 }
 
 const $CardSuit = $enum(CardSuit);
+
+export function iconForCardSuit(x: CardSuit): string {
+  if (x === CardSuit.Spades) return "♠";
+  if (x === CardSuit.Clubs) return "♣";
+  if (x === CardSuit.Hearts) return "♥";
+  return "♦";
+}
 
 export function numericCardSuit(x: CardSuit): number {
   return $CardSuit.indexOfValue(x) * 100;
