@@ -1,3 +1,6 @@
+**/coverage/*
+**/dist/*
+**/.storybook/*
 **/node_modules/*
 **/out/*
 **/.next/*

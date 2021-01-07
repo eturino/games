@@ -1,5 +1,5 @@
 import { $enum } from "ts-enum-util";
-import { buildDeck, CardValue, numericCardValue, sortCardValue } from "../card-types";
+import { buildDeck, CardValue, numericCardValue, sortCardValue } from "./cards";
 
 describe("numericCardValue", () => {
   $enum(CardValue)

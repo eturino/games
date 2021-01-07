@@ -7,6 +7,7 @@
     "dev": "yarn codegen && next dev",
     "build": "yarn codegen && next build",
     "test": "yarn codegen && jest",
+    "test:coverage": "jest --coverage",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
@@ -23,9 +24,9 @@
     }
   },
   "lint-staged": {
-    "*.@(ts|tsx)": [
-      "yarn lint",
-      "yarn format"
+    "./{lib,pages,src,public}/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "dependencies": {
@@ -39,11 +40,15 @@
     "apollo-server-micro": "^2.16.1",
     "graphql": "15.4.0",
     "lodash": "^4.17.20",
+    "nanoid": "^3.1.20",
+    "nanoid-dictionary": "^4.1.0",
     "next": "10.0.3",
+    "ramda": "^0.27.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "theme-ui": "^0.3.5",
-    "ts-enum-util": "^4.0.2"
+    "ts-enum-util": "^4.0.2",
+    "utility-types": "^3.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -60,6 +65,8 @@
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.19",
     "@types/lodash": "^4.14.167",
+    "@types/nanoid": "^2.1.0",
+    "@types/nanoid-dictionary": "^4.1.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-test-renderer": "17.0.0",

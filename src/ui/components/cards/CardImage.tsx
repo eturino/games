@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { FunctionComponent } from "react";
 import { jsx } from "theme-ui";
-import { CardInfo } from "../../../models/card-types";
+import { CardInfo } from "../../../models/cards";
 import { cardImageFilename, cardImageFilenameBack } from "../../card-utils";
 
 type RawProps = { alt: string; src: string };

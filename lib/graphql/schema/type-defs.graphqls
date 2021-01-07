@@ -1,62 +1,9 @@
 type Query {
   viewer: User
-
-  game(id: ID!): Game
-}
-
-type Mutation {
-  createGame(input: NewGameInput!): Game!
-  joinGame(id: ID!): Game!
-  endGame(id: ID!): Game!
 }
 
 type User {
   id: ID!
   name: String!
   picture: String
-}
-
-input NewGameInput {
-  name: String!
-  lastRoundNumber: Int!
-}
-
-type Game {
-  id: ID!
-  name: String!
-  lastRoundNumber: Int!
-  players: [User!]!
-  status: Status!
-  phase: Phase!
-  round: Round!
-
-  #  TODO: lives left count
-  #  TODO: bonus turn left
-}
-
-type Round {
-  id: ID!
-  number: Int!
-  hands: [Hand!]!
-  cards: [Int!]!
-}
-
-type Hand {
-  id: ID!
-  playerID: ID!
-  roundID: ID!
-  cards: [Int!]!
-}
-
-enum Status {
-  READY
-  PLAYING
-  VICTORY
-  FAIL
-}
-
-enum Phase {
-  PREPARATION
-  PLAYING
-  FINISHED
 }

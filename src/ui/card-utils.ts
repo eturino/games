@@ -1,4 +1,4 @@
-import { CardInfo } from "../models/card-types";
+import { CardInfo } from "../models/cards";
 
 export const cardImageFilenameBack = "/img/cards/back.png";
 

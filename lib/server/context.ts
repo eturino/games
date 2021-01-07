@@ -1,14 +1,14 @@
 import { InMemoryLRUCache } from "apollo-server-caching";
+import { KeyValueCache } from "apollo-server-caching/src/KeyValueCache";
 import { IncomingMessage } from "http";
+import isFunction, { forIn, has } from "lodash";
 import auth0 from "../../lib/auth0";
 import { User } from "../../__generated__/lib/graphql-schema";
 import { ResContext } from "../res-context";
 import { iClaimsToUser } from "../user-utils";
-import { GameDataSource } from "./game-data-source";
 
 export type CustomContext = ResContext & {
   user: Promise<User | null>;
-  gameDataSource: GameDataSource<CustomContext>;
 };
 
 export const serverCache: InMemoryLRUCache = new InMemoryLRUCache();
@@ -22,7 +22,7 @@ async function getUserPromise(req?: IncomingMessage): Promise<User | null> {
 }
 
 export function buildBlankContext(): CustomContext {
-  const context = { user: Promise.resolve(null), gameDataSource: new GameDataSource<CustomContext>() };
+  const context = { user: Promise.resolve(null) };
   return initDS(context, new InMemoryLRUCache());
 }
 
@@ -31,12 +31,24 @@ export function buildContext(given: ResContext): CustomContext {
     ...given,
     user: getUserPromise(given.req),
     cache: serverCache,
-    gameDataSource: new GameDataSource(),
   };
   return initDS(context, serverCache);
 }
 
 function initDS(context: CustomContext, cache: InMemoryLRUCache): CustomContext {
-  context.gameDataSource.initialize({ context, cache });
+  const initParams = { context, cache };
+  forIn(context, (x) => {
+    if (isInitializable(x)) {
+      x.initialize(initParams);
+    }
+  });
   return context;
+}
+
+interface Initializable {
+  initialize: (input: { context: CustomContext; cache: KeyValueCache }) => void;
+}
+
+function isInitializable(x: any): x is Initializable {
+  return x && has(x, "initialize") && isFunction(x.initialize);
 }

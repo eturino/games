@@ -1,9 +1,0 @@
-# import Hand from './hand.graphql'
-
-fragment Round on Round {
-  id
-  cards
-  hands {
-    ...Hand
-  }
-}

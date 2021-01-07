@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { User } from "./graphql-schema";
+import { UserFragment } from "./graphql/client/fragments/user.graphql";
 import { iClaimsToUser } from "./user-utils";
 
 function getFetchOptions(cookie: string) {
@@ -8,7 +8,7 @@ function getFetchOptions(cookie: string) {
   return { headers: { cookie } };
 }
 
-export async function fetchUser(cookie = ""): Promise<User | null> {
+export async function fetchUser(cookie = ""): Promise<UserFragment | null> {
   if (typeof window !== "undefined" && window.__user) {
     return window.__user;
   }
@@ -30,7 +30,7 @@ export async function fetchUser(cookie = ""): Promise<User | null> {
 
 type Opts = { required?: boolean };
 
-export function useFetchUser({ required }: Opts = {}): { user: User | null; loading: boolean } {
+export function useFetchUser({ required }: Opts = {}): { user: UserFragment | null; loading: boolean } {
   const [loading, setLoading] = useState(() => !(typeof window !== "undefined" && window.__user));
   const [user, setUser] = useState(() => {
     if (typeof window === "undefined") {

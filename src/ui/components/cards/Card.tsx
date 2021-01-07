@@ -2,7 +2,7 @@
 /** @jsx jsx */
 import { FunctionComponent } from "react";
 import { jsx } from "theme-ui";
-import { CardSuit, CardValue } from "../../../models/card-types";
+import { CardSuit, CardValue } from "../../../models/cards";
 import { BackCardImage, FaceCardImage } from "./CardImage";
 import { UICard } from "./UICard";
 

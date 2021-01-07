@@ -1,7 +1,7 @@
-# import Partial from './fragments/partial.graphql'
+# import User from './fragments/user.graphql'
 
 query Viewer {
   viewer {
-    ...Partial
+    ...User
   }
 }
