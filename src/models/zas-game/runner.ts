@@ -9,7 +9,7 @@ export class GameRunner {
     this._game = initialGame;
   }
 
-  get game() {
+  get game(): Game {
     return this._game;
   }
 
