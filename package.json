@@ -10,8 +10,8 @@
     "test:coverage": "jest --coverage",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
-    "format": "prettier --write \"{lib,pages,src,public}/**/*\"",
-    "lint": "eslint \"{lib,pages,src,public}/**/*.{ts,tsx,js,html}\"",
+    "format": "prettier --write \"{src,public}/**/*\"",
+    "lint": "eslint \"{src,public}/**/*.{ts,tsx,js,html}\"",
     "fix": "yarn format && yarn lint --fix",
     "test-all": "yarn lint && yarn type-check && yarn test",
     "storybook": "start-storybook -p 6006",
@@ -24,7 +24,7 @@
     }
   },
   "lint-staged": {
-    "./{lib,pages,src,public}/**/*.{js,jsx,ts,tsx}": [
+    "./{src,public}/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ]

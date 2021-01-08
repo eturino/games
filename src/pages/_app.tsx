@@ -3,7 +3,7 @@ import { AppProps } from "next/app";
 import React, { FunctionComponent } from "react";
 import { ThemeProvider } from "theme-ui";
 import { useApollo } from "../lib/apollo";
-import theme from "../src/theme";
+import theme from "../theme";
 
 const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const apolloClient = useApollo(pageProps.initialApolloState);

@@ -1,4 +1,4 @@
-import { UserFragment } from "../../../lib/graphql/client/fragments/user.graphql";
+import { UserFragment } from "../../lib/graphql/client/fragments/user.graphql";
 import { makeGameId, makeUserId } from "../../utils/ids";
 import { initialGame, treatLost } from "./game";
 import { PlayStatus, roundMockPlayLoose, roundMockPlayWin } from "./round";

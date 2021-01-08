@@ -6,5 +6,5 @@
 **/.next/*
 **/*.graphqls.d.ts
 **/*.graphql.d.ts
-**/__generated__/**
+src/__generated__/**
 **/graphql-schema.d.ts

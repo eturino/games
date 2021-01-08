@@ -1,5 +1,5 @@
-import { UserFragment } from "../../../lib/graphql/client/fragments/user.graphql";
 import { InvalidPlayerError } from "../../errors";
+import { UserFragment } from "../../lib/graphql/client/fragments/user.graphql";
 import { makeGameId } from "../../utils/ids";
 import { findPlayerAndRestWith, findPlayerWith, pickRandomPlayer } from "../../utils/lists";
 import { BetActionType } from "./consts";
