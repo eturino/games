@@ -14,6 +14,7 @@ export type Game = {
   id: string;
   playerCounters: PlayerCounter[];
   currentRound: RoundState;
+  previousRounds: RoundState[];
   lastPlayer: UserFragment | null;
   currentPlayer: UserFragment;
   maxPoints: number;
@@ -45,13 +46,14 @@ export function initialGame(params: InitialGameParams): Game {
   }
 
   return {
-    finished: false,
     id: params.id ?? makeGameId(),
+    maxPoints: params.maxPoints,
+    finished: false,
     playerCounters: params.users.map((user) => ({ user, points: 0 })),
     currentRound: initialRound(),
-    lastPlayer: null,
     currentPlayer,
-    maxPoints: params.maxPoints,
+    previousRounds: [],
+    lastPlayer: null,
   };
 }
 
@@ -124,5 +126,5 @@ function treatFinished(game: Game): Game {
 function treatNewRound(game: Game): Game {
   if (game.finished) return game;
 
-  return { ...game, currentRound: initialRound() };
+  return { ...game, currentRound: initialRound(), previousRounds: [game.currentRound, ...game.previousRounds] };
 }

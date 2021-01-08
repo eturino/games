@@ -10,7 +10,7 @@ export interface CardProps {
   faceUp: boolean;
   cardValue: CardValue;
   cardSuit: CardSuit;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Card: FunctionComponent<CardProps> = ({ faceUp, cardValue, cardSuit, onClick }) => {

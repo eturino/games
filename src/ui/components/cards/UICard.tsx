@@ -8,7 +8,7 @@ export interface UICardProps {
   faceUp: boolean;
   renderUp: RenderFnVoid;
   renderDown: RenderFnVoid;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const UICard: FunctionComponent<UICardProps> = ({ faceUp, renderUp, renderDown, onClick }) => {
