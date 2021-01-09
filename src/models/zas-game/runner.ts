@@ -1,4 +1,4 @@
-import { isAssignAction, isBetAction, PlayerAction } from "./consts";
+import { isAssignAction, isBetAction, PlayerAction } from "./actions";
 import { chooseNewPlayer, Game, gamePlayBet, treatNewRound } from "./game";
 
 export class GameRunner {

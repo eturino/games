@@ -1,7 +1,7 @@
 import { shuffleAndDrawCard } from "../../utils/lists";
 import { numericCardValue } from "../cards";
+import { BetActionType, isBetHigher, isBetLower } from "./actions";
 import { buildZasDeck, ZasCardInfo } from "./cards";
-import { BetActionType, isBetHigher, isBetLower } from "./consts";
 
 export type RoundState = {
   /**

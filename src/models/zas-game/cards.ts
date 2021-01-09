@@ -1,15 +1,19 @@
+import { first, last } from "lodash";
 import { $CardValue, buildDeck, CardInfo, CardSuit, CardValue, makeCardInfo } from "../cards";
 
 export type ZasCardInfo = CardInfo & { special: boolean };
 
-export const SpecialValues = calcSpecialValues($CardValue.getValues());
+const values = $CardValue.getValues();
+export const SPECIAL_VALUES = calcSpecialValues(values);
+export const MIN_VALUE = first(values);
+export const MAX_VALUE = last(values);
 
 export function zasCardFor(suit: CardSuit, value: CardValue): ZasCardInfo {
   return zasCard(makeCardInfo(suit, value));
 }
 
 export function zasCard(cardInfo: CardInfo): ZasCardInfo {
-  return { ...cardInfo, special: SpecialValues.includes(cardInfo.cardValue) };
+  return { ...cardInfo, special: SPECIAL_VALUES.includes(cardInfo.cardValue) };
 }
 
 export const buildZasDeck = (): ZasCardInfo[] => buildDeck(zasCardFor);

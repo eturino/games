@@ -2,7 +2,8 @@ import { InvalidPlayerError } from "../../errors";
 import { UserFragment } from "../../lib/graphql/client/fragments/user.graphql";
 import { makeGameId } from "../../utils/ids";
 import { findPlayerAndRestWith, pickRandomPlayer } from "../../utils/lists";
-import { BetActionType } from "./consts";
+import { BetActionType } from "./actions";
+import { ZasCardInfo } from "./cards";
 import { initialRound, PlayStatus, pointsForRound, roundPlayBet, RoundState } from "./round";
 
 export type PlayerCounter = {
@@ -69,7 +70,12 @@ export function chooseNewPlayer(game: Game, playerId: UserFragment["id"]): Game 
   const cp = game.playerCounters.find((x) => x.user.id === playerId);
   if (!cp) throw new InvalidPlayerError(`player ${playerId} not found in game`);
 
-  return { ...game, currentPlayer: cp.user, lastPlayer: game.currentPlayer };
+  return {
+    ...game,
+    currentPlayer: cp.user,
+    lastPlayer: game.currentPlayer,
+    currentRound: { ...game.currentRound, playStatus: PlayStatus.INITIAL },
+  };
 }
 
 /**
@@ -114,4 +120,12 @@ export function treatNewRound(game: Game): Game {
   if (game.finished) return game;
 
   return { ...game, currentRound: initialRound(), previousRounds: [game.currentRound, ...game.previousRounds] };
+}
+
+export function currentCard(game: Game): ZasCardInfo {
+  return game.currentRound.faceUpCards[0];
+}
+
+export function currentStatus(game: Game): PlayStatus {
+  return game.currentRound.playStatus;
 }
