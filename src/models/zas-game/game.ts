@@ -1,7 +1,7 @@
 import { InvalidPlayerError } from "../../errors";
 import { UserFragment } from "../../lib/graphql/client/fragments/user.graphql";
 import { makeGameId } from "../../utils/ids";
-import { findPlayerAndRestWith, pickRandomPlayer } from "../../utils/lists";
+import { pickRandomPlayer } from "../../utils/lists";
 import { BetActionType } from "./actions";
 import { ZasCardInfo } from "./cards";
 import { initialRound, PlayStatus, pointsForRound, roundPlayBet, RoundState } from "./round";
@@ -91,10 +91,7 @@ export function treatDraw(game: Game): Game {
   if (game.finished) return game;
   if (game.currentRound.playStatus !== PlayStatus.DRAW) return game;
 
-  const [pc, rest] = findPlayerAndRestWith(game.playerCounters, (p) => p.user.id === game.currentPlayer.id);
-
-  const playerCounter = { ...pc, points: pc.points + pointsForRound(game.currentRound) };
-  return { ...game, playerCounters: [playerCounter, ...rest] };
+  return { ...game, playerCounters: addPointsToCurrentCounter(game, 1) };
 }
 
 /**
@@ -110,10 +107,17 @@ export function treatLost(game: Game): Game {
   if (game.finished) return game;
   if (game.currentRound.playStatus !== PlayStatus.LOST) return game;
 
-  const [pc, rest] = findPlayerAndRestWith(game.playerCounters, (p) => p.user.id === game.currentPlayer.id);
-  const playerCounter = { ...pc, points: pc.points + pointsForRound(game.currentRound) };
+  return { ...game, playerCounters: addPointsToCurrentCounter(game, pointsForRound(game.currentRound)) };
+}
 
-  return { ...game, playerCounters: [playerCounter, ...rest] };
+function addPointsToCurrentCounter(game: Game, extraPoints: number): PlayerCounter[] {
+  return game.playerCounters.map((pc) => {
+    if (pc.user.id === game.currentPlayer.id) {
+      return { ...pc, points: pc.points + extraPoints };
+    }
+
+    return pc;
+  });
 }
 
 export function treatNewRound(game: Game): Game {

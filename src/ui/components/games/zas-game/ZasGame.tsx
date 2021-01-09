@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useState } from "react";
-import { Avatar, Box, Button, Card as VisualCard, Flex, Text } from "theme-ui";
+import { Avatar, Box, Card as VisualCard, Flex, Text } from "theme-ui";
 import { keyForCardInfo } from "../../../../models/cards";
 import { allowedActionTypes } from "../../../../models/zas-game/actions";
 import { ZasCardInfo } from "../../../../models/zas-game/cards";
 import { Game, PlayerCounter } from "../../../../models/zas-game/game";
 import { GameRunner } from "../../../../models/zas-game/runner";
 import { Card } from "../../cards/Card";
+import { UIButton } from "../../cards/UIButton";
 
 const ZasCard: FunctionComponent<{ card: ZasCardInfo }> = ({ card }) => {
   return (
@@ -84,15 +85,15 @@ export const ZasGame: FunctionComponent<{ runner: GameRunner }> = ({ runner }) =
       <ZasUsers game={game} onAssign={allowed.includes("ASSIGN") ? onAssign : undefined} />
 
       <header>
-        <Button onClick={onNextRound} disabled={!allowed.includes("START_NEW_ROUND")}>
+        <UIButton onClick={onNextRound} disabled={!allowed.includes("START_NEW_ROUND")}>
           NEXT ROUND
-        </Button>{" "}
-        <Button onClick={onBetHigher} disabled={!allowed.includes("BET_HIGHER")}>
+        </UIButton>{" "}
+        <UIButton onClick={onBetHigher} disabled={!allowed.includes("BET_HIGHER")}>
           BET HIGHER
-        </Button>{" "}
-        <Button onClick={onBetLower} disabled={!allowed.includes("BET_LOWER")}>
+        </UIButton>{" "}
+        <UIButton onClick={onBetLower} disabled={!allowed.includes("BET_LOWER")}>
           BET LOWER
-        </Button>
+        </UIButton>
       </header>
 
       <div>
