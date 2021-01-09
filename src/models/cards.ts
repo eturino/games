@@ -5,6 +5,10 @@ export type CardInfo = {
   cardSuit: CardSuit;
 };
 
+export function keyForCardInfo(cardInfo: CardInfo): string {
+  return `${cardInfo.cardSuit}${cardInfo.cardValue}`;
+}
+
 export enum CardValue {
   N1 = "1",
   N2 = "2",

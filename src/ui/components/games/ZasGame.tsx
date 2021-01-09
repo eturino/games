@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { UserFragment } from "../../../lib/graphql/client/fragments/user.graphql";
+import { keyForCardInfo } from "../../../models/cards";
 import { initialGame } from "../../../models/zas-game/game";
 import { GameRunner } from "../../../models/zas-game/runner";
 import { makeUserId } from "../../../utils/ids";
@@ -16,8 +17,6 @@ export const ZasGame: FunctionComponent<{ runner: GameRunner }> = ({ runner }) =
   const onBetHigher = () => setGame(runner.act({ type: "BET_HIGHER", payload: null }));
   const onBetLower = () => setGame(runner.act({ type: "BET_LOWER", payload: null }));
 
-  const card = game.currentRound.faceUpCards[0];
-
   return (
     <div>
       <header>game: {game.id}</header>
@@ -33,7 +32,9 @@ export const ZasGame: FunctionComponent<{ runner: GameRunner }> = ({ runner }) =
 
       <div>
         <h2>Cards in stack: {game.currentRound.faceUpCards.length}</h2>
-        <Card faceUp={true} cardValue={card.cardValue} cardSuit={card.cardSuit} />
+        {game.currentRound.faceUpCards.map((card) => (
+          <Card key={keyForCardInfo(card)} faceUp={true} cardValue={card.cardValue} cardSuit={card.cardSuit} />
+        ))}
         <pre>{JSON.stringify(game, null, 2)}</pre>
       </div>
     </div>
