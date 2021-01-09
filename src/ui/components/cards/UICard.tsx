@@ -8,10 +8,11 @@ export interface UICardProps {
   faceUp: boolean;
   renderUp: RenderFnVoid;
   renderDown: RenderFnVoid;
+  withBorder?: boolean;
   onClick?: () => void;
 }
 
-export const UICard: FunctionComponent<UICardProps> = ({ faceUp, renderUp, renderDown, onClick }) => {
+export const UICard: FunctionComponent<UICardProps> = ({ faceUp, withBorder, renderUp, renderDown, onClick }) => {
   return (
     <Card
       variant="primary"
@@ -32,6 +33,9 @@ export const UICard: FunctionComponent<UICardProps> = ({ faceUp, renderUp, rende
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          borderColor: "primary",
+          borderStyle: "solid",
+          ...(withBorder ? { borderWidth: "10px" } : { border: 0 }),
         }}
       >
         {faceUp ? renderUp() : renderDown()}

@@ -1,10 +1,12 @@
 import { NormalizedCacheObject } from "@apollo/client";
 import { GetServerSidePropsContext } from "next";
+import dynamic from "next/dynamic";
 import React, { FunctionComponent } from "react";
 import { Box, Heading } from "theme-ui";
 import { initializeApolloForServerSide } from "../lib/apollo-server-side";
 import { useViewerQuery, ViewerDocument } from "../lib/graphql/client/viewer.graphql";
-import { ZasGameContainer } from "../ui/components/games/ZasGame";
+
+const ZasGameContainer = dynamic(() => import("../ui/components/games/zas-game/ZasGameContainer"), { ssr: false });
 
 const Index: FunctionComponent = () => {
   const { data } = useViewerQuery();

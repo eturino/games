@@ -1,4 +1,4 @@
-import { QueryResolvers } from "../../__generated__/lib/graphql-schema";
+import { QueryResolvers } from "../graphql-schema";
 import { CustomContext } from "./context";
 
 const Query: Required<QueryResolvers<CustomContext>> = {

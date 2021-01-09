@@ -10,7 +10,6 @@ export function keyForCardInfo(cardInfo: CardInfo): string {
 }
 
 export enum CardValue {
-  N1 = "1",
   N2 = "2",
   N3 = "3",
   N4 = "4",
@@ -23,9 +22,10 @@ export enum CardValue {
   J = "J",
   Q = "Q",
   K = "K",
+  A = "A",
 }
 
-const $CardValue = $enum(CardValue);
+export const $CardValue = $enum(CardValue);
 
 export function numericCardValue(x: CardValue): number {
   return $CardValue.indexOfValue(x) + 1;
@@ -42,7 +42,7 @@ export enum CardSuit {
   Diamonds = "diamonds",
 }
 
-const $CardSuit = $enum(CardSuit);
+export const $CardSuit = $enum(CardSuit);
 
 export function iconForCardSuit(x: CardSuit): string {
   if (x === CardSuit.Spades) return "♠";
@@ -79,8 +79,10 @@ export function sortCardInfo(a: CardInfo, b: CardInfo): number {
   return numericCardInfo(a) - numericCardInfo(b);
 }
 
-export function buildDeck(): CardInfo[] {
+export function buildDeck<T extends CardInfo>(fn: (suit: CardSuit, value: CardValue) => T): T[] {
   return $CardSuit.getValues().flatMap((suit) => {
-    return $CardValue.getValues().map((value) => makeCardInfo(suit, value));
+    return $CardValue.getValues().map((value) => fn(suit, value));
   });
 }
+
+export const buildDeckSimple = (): CardInfo[] => buildDeck(makeCardInfo);

@@ -1,17 +1,18 @@
 import { shuffleAndDrawCard } from "../../utils/lists";
-import { buildDeck, CardInfo, numericCardValue } from "../cards";
+import { numericCardValue } from "../cards";
+import { buildZasDeck, ZasCardInfo } from "./cards";
 import { BetActionType, isBetHigher, isBetLower } from "./consts";
 
 export type RoundState = {
   /**
    * list of cards face down, left to play
    */
-  faceDownCards: CardInfo[];
+  faceDownCards: ZasCardInfo[];
 
   /**
    * list of cards that have been played. The last played card will be the first element of this array.
    */
-  faceUpCards: CardInfo[];
+  faceUpCards: ZasCardInfo[];
 
   /**
    * status of the last play
@@ -31,7 +32,7 @@ export enum PlayStatus {
  *
  * @param deck
  */
-export function initialRound(deck: CardInfo[] = buildDeck()): RoundState {
+export function initialRound(deck: ZasCardInfo[] = buildZasDeck()): RoundState {
   const [card, faceDownCards] = shuffleAndDrawCard(deck);
   return {
     playStatus: PlayStatus.INITIAL,
@@ -99,7 +100,7 @@ function roundPlay(round: RoundState, statusFn: (input: StatusFnParams) => PlayS
   };
 }
 
-type StatusFnParams = { prevCard: CardInfo; currentCard: CardInfo };
+type StatusFnParams = { prevCard: ZasCardInfo; currentCard: ZasCardInfo };
 type NextStatusForParams = StatusFnParams & { bet: BetActionType };
 
 /**

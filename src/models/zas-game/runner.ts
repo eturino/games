@@ -1,5 +1,5 @@
-import { isBetAction, PlayerAction } from "./consts";
-import { chooseNewPlayer, Game, gamePlayBet } from "./game";
+import { isAssignAction, isBetAction, PlayerAction } from "./consts";
+import { chooseNewPlayer, Game, gamePlayBet, treatNewRound } from "./game";
 
 export class GameRunner {
   protected _game: Game;
@@ -25,6 +25,10 @@ export class GameRunner {
       return gamePlayBet(this._game, action.type);
     }
 
-    return chooseNewPlayer(this._game, action.payload.playerID);
+    if (isAssignAction(action)) {
+      return chooseNewPlayer(this._game, action.payload.playerID);
+    }
+
+    return treatNewRound(this._game);
   }
 }

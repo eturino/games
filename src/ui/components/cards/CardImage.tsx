@@ -18,5 +18,6 @@ export const BackCardImage: FunctionComponent = () => (
 export const FaceCardImage: FunctionComponent<{ cardInfo: CardInfo }> = ({ cardInfo }) => {
   const alt = `${cardInfo.cardValue} ${cardInfo.cardSuit}`;
   const src = cardImageFilename(cardInfo);
+
   return <RawCardImage alt={alt} src={src} />;
 };

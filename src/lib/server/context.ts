@@ -2,8 +2,8 @@ import { InMemoryLRUCache } from "apollo-server-caching";
 import { KeyValueCache } from "apollo-server-caching/src/KeyValueCache";
 import { IncomingMessage } from "http";
 import isFunction, { forIn, has } from "lodash";
-import { User } from "../../__generated__/lib/graphql-schema";
 import auth0 from "../auth0";
+import { User } from "../graphql-schema";
 import { ResContext } from "../res-context";
 import { iClaimsToUser } from "../user-utils";
 

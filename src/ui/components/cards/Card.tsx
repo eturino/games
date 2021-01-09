@@ -10,15 +10,17 @@ export interface CardProps {
   faceUp: boolean;
   cardValue: CardValue;
   cardSuit: CardSuit;
+  special?: boolean;
   onClick?: () => void;
 }
 
-export const Card: FunctionComponent<CardProps> = ({ faceUp, cardValue, cardSuit, onClick }) => {
+export const Card: FunctionComponent<CardProps> = ({ faceUp, cardValue, cardSuit, special, onClick }) => {
   return (
     <UICard
       faceUp={faceUp}
       renderDown={() => <BackCardImage />}
       renderUp={() => <FaceCardImage cardInfo={{ cardValue, cardSuit }} />}
+      withBorder={special}
       onClick={onClick}
     />
   );

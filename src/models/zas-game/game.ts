@@ -1,7 +1,7 @@
 import { InvalidPlayerError } from "../../errors";
 import { UserFragment } from "../../lib/graphql/client/fragments/user.graphql";
 import { makeGameId } from "../../utils/ids";
-import { findPlayerAndRestWith, findPlayerWith, pickRandomPlayer } from "../../utils/lists";
+import { findPlayerAndRestWith, pickRandomPlayer } from "../../utils/lists";
 import { BetActionType } from "./consts";
 import { initialRound, PlayStatus, pointsForRound, roundPlayBet, RoundState } from "./round";
 
@@ -75,8 +75,6 @@ export function chooseNewPlayer(game: Game, playerId: UserFragment["id"]): Game 
 /**
  * returns a new Game object with:
  *  - the counter of the current player gets a point
- *  - if the points of the current player is >= the maxPoints it sets finished to true
- *  - otherwise replaces currentRound with a new round.
  *
  * note: the current player remains unchanged, it is the same player
  * note: returns the same game unchanged if the round has not been draw or if the game is finished
@@ -90,14 +88,12 @@ export function treatDraw(game: Game): Game {
   const [pc, rest] = findPlayerAndRestWith(game.playerCounters, (p) => p.user.id === game.currentPlayer.id);
 
   const playerCounter = { ...pc, points: pc.points + pointsForRound(game.currentRound) };
-  return treatFinished({ ...game, playerCounters: [playerCounter, ...rest] });
+  return { ...game, playerCounters: [playerCounter, ...rest] };
 }
 
 /**
  * returns a new Game object with:
  *  - the points of the current round added to the counter of the current player
- *  - if the points of the current player is >= the maxPoints it sets finished to true
- *  - otherwise replaces currentRound with a new round.
  *
  * note: the current player remains unchanged, it is the same player
  * note: returns the same game unchanged if the round has not been lost or if the game is finished
@@ -111,19 +107,10 @@ export function treatLost(game: Game): Game {
   const [pc, rest] = findPlayerAndRestWith(game.playerCounters, (p) => p.user.id === game.currentPlayer.id);
   const playerCounter = { ...pc, points: pc.points + pointsForRound(game.currentRound) };
 
-  return treatNewRound(treatFinished({ ...game, playerCounters: [playerCounter, ...rest] }));
+  return { ...game, playerCounters: [playerCounter, ...rest] };
 }
 
-function treatFinished(game: Game): Game {
-  const playerCounter = findPlayerWith(game.playerCounters, (x) => x.user.id === game.currentPlayer.id);
-  const finished = playerCounter.points >= game.maxPoints;
-  return {
-    ...game,
-    finished,
-  };
-}
-
-function treatNewRound(game: Game): Game {
+export function treatNewRound(game: Game): Game {
   if (game.finished) return game;
 
   return { ...game, currentRound: initialRound(), previousRounds: [game.currentRound, ...game.previousRounds] };

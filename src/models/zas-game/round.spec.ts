@@ -1,10 +1,11 @@
 import { tail } from "lodash";
-import { buildDeck, CardSuit, CardValue, makeCardInfo } from "../cards";
+import { CardSuit, CardValue, makeCardInfo } from "../cards";
+import { buildZasDeck, zasCard } from "./cards";
 import { initialRound, nextStatusFor, PlayStatus, pointsForRound, roundPlayBet } from "./round";
 
 describe("initialRound()", () => {
   it("init", () => {
-    const deck = buildDeck();
+    const deck = buildZasDeck();
     const a = initialRound(deck);
     expect(a.playStatus).toEqual(PlayStatus.INITIAL);
     expect(a.faceUpCards.length).toEqual(1);
@@ -23,8 +24,8 @@ describe("pointsForRound", () => {
 
 describe("nextStatusFor()", () => {
   describe("given 2 cards of the same value", () => {
-    const currentCard = makeCardInfo(CardSuit.Hearts, CardValue.N3);
-    const prevCard = makeCardInfo(CardSuit.Clubs, CardValue.N3);
+    const currentCard = zasCard(makeCardInfo(CardSuit.Hearts, CardValue.N3));
+    const prevCard = zasCard(makeCardInfo(CardSuit.Clubs, CardValue.N3));
 
     it("with bet higher: draw", () => {
       expect(nextStatusFor({ currentCard, prevCard, bet: "BET_HIGHER" })).toEqual(PlayStatus.DRAW);
@@ -35,8 +36,8 @@ describe("nextStatusFor()", () => {
   });
 
   describe("new card is higher", () => {
-    const currentCard = makeCardInfo(CardSuit.Hearts, CardValue.N5);
-    const prevCard = makeCardInfo(CardSuit.Clubs, CardValue.N3);
+    const currentCard = zasCard(makeCardInfo(CardSuit.Hearts, CardValue.N5));
+    const prevCard = zasCard(makeCardInfo(CardSuit.Clubs, CardValue.N3));
 
     it("with bet higher: won", () => {
       expect(nextStatusFor({ currentCard, prevCard, bet: "BET_HIGHER" })).toEqual(PlayStatus.WON);
@@ -47,8 +48,8 @@ describe("nextStatusFor()", () => {
   });
 
   describe("new card is lower", () => {
-    const currentCard = makeCardInfo(CardSuit.Hearts, CardValue.N2);
-    const prevCard = makeCardInfo(CardSuit.Clubs, CardValue.N3);
+    const currentCard = zasCard(makeCardInfo(CardSuit.Hearts, CardValue.N2));
+    const prevCard = zasCard(makeCardInfo(CardSuit.Clubs, CardValue.N3));
 
     it("with bet higher: lost", () => {
       expect(nextStatusFor({ currentCard, prevCard, bet: "BET_HIGHER" })).toEqual(PlayStatus.LOST);
